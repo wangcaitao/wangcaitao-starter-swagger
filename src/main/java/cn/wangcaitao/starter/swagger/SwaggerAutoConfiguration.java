@@ -14,9 +14,13 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger.web.SwaggerResource;
+import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author wangcaitao
@@ -25,7 +29,7 @@ import javax.annotation.Resource;
 @EnableConfigurationProperties(value = SwaggerProperties.class)
 @ConditionalOnClass(Docket.class)
 @EnableSwagger2
-public class SwaggerAutoConfiguration extends WebMvcConfigurerAdapter {
+public class SwaggerAutoConfiguration extends WebMvcConfigurerAdapter implements SwaggerResourcesProvider {
 
     @Resource
     private SwaggerProperties swaggerProperties;
@@ -59,5 +63,23 @@ public class SwaggerAutoConfiguration extends WebMvcConfigurerAdapter {
                         swaggerProperties.getContact().getEmail()))
                 .version(swaggerProperties.getVersion())
                 .build();
+    }
+
+    @Override
+    public List<SwaggerResource> get() {
+        List<SwaggerResource> swaggerResources = new ArrayList<>();
+        List<cn.wangcaitao.starter.swagger.Resource> resources = swaggerProperties.getResources();
+        if (!resources.isEmpty()) {
+            for (cn.wangcaitao.starter.swagger.Resource resource : resources) {
+                SwaggerResource swaggerResource = new SwaggerResource();
+                swaggerResource.setName(resource.getName());
+                swaggerResource.setLocation(resource.getLocation());
+                swaggerResource.setSwaggerVersion(DocumentationType.SWAGGER_2.getVersion());
+
+                swaggerResources.add(swaggerResource);
+            }
+        }
+
+        return swaggerResources;
     }
 }
