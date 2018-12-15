@@ -1,12 +1,5 @@
 # wangcaitao-starter-swagger
 
-## 环境说明
-
-* jdk1.8
-* spring-boot-1.5.4.RELEASE
-* springfox-swagger2-2.7.0
-* springfox-swagger-ui-2.7.0
-
 ## 使用说明
 
 * 在 `pom.xml` 添加 maven 依赖
@@ -14,7 +7,7 @@
     <dependency>
         <groupId>cn.wangcaitao</groupId>
         <artifactId>wangcaitao-starter-swagger</artifactId>
-        <version>1.1.0</version>
+        <version>${last.version}</version>
     </dependency>
     ```
 * 在 `application.yml` 中添加配置信息
