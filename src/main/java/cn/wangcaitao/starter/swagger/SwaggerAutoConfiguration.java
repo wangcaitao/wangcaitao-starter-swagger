@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -29,7 +29,7 @@ import java.util.List;
 @EnableConfigurationProperties(value = SwaggerProperties.class)
 @ConditionalOnClass(Docket.class)
 @EnableSwagger2
-public class SwaggerAutoConfiguration extends WebMvcConfigurerAdapter implements SwaggerResourcesProvider {
+public class SwaggerAutoConfiguration implements WebMvcConfigurer, SwaggerResourcesProvider {
 
     @Resource
     private SwaggerProperties swaggerProperties;
